@@ -1,5 +1,7 @@
 package com.anma;
 
+import com.anma.grpc.Models;
+import com.anma.grpc.PersonServiceGrpc;
 import io.grpc.*;
 import io.grpc.stub.StreamObserver;
 
@@ -13,22 +15,23 @@ API - https://grpc.github.io/grpc-java/javadoc/
 There are four types of gRPC service methods: unary,
 server-streaming, client-streaming, and bidirectional-streaming.
  */
-public class PersonServer {
+public class PServer {
     private final static int PORT = 9093;
     private final Server server;
 
-    public PersonServer(int port) {
+    public PServer(int port) {
         this.server = ServerBuilder.forPort(port)
                 .addService(new PersonService())
                 .build();
     }
 
     public void start() {
+        System.out.println("Server started!");
         try {
             server.start();
             Runtime.getRuntime().addShutdownHook(new Thread(() -> {
                 try {
-                    PersonServer.this.stop();
+                    PServer.this.stop();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -44,6 +47,7 @@ public class PersonServer {
         }
     }
 
+    // await termination
     private void blockUntilShutdown() throws InterruptedException {
         if (server != null) {
             server.awaitTermination();
@@ -51,41 +55,11 @@ public class PersonServer {
     }
 
     public static void main(String[] args) throws InterruptedException, UnknownHostException {
-        PersonServer server = new PersonServer(PORT);
+        PServer server = new PServer(PORT);
         server.start();
         server.blockUntilShutdown();
 
-        ManagedChannel channel =
-                ManagedChannelBuilder.forAddress(
-                                InetAddress.getLocalHost().getHostName(), PORT)
-                        .build();
-        channel.awaitTermination(30, TimeUnit.SECONDS);
-        ManagedChannel shutdown = channel.shutdown();
 
-        StreamObserver<Person> responseObserver = new StreamObserver<Person>() {
-            @Override
-            public void onNext(Person value) {
-                System.out.println(value.getAge());
-            }
 
-            @Override
-            public void onError(Throwable t) {
-
-            }
-
-            @Override
-            public void onCompleted() {
-
-            }
-        };
-
-        // Auth
-        /*
-        ServerCall<?, ?> call;
-        Status status = AuthorizationUtil.clientAuthorizationCheck(
-            call, Lists.newArrayList("foo@iam.gserviceaccount.com"));
-         */
-
-        ManagedChannel channel1 = ManagedChannelBuilder.forAddress("localhost", PORT).build();
     }
 }

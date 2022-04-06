@@ -1,3 +1,34 @@
+## GRPC with Java (Gradle build)
+
+### Unary
+The service stub signature for a unary RPC method unaryExample:
+```java
+public void unaryExample(
+RequestType request,
+StreamObserver<ResponseType> responseObserver)
+```
+### Server-streaming
+The service stub signature for a server-streaming RPC method serverStreamingExample:
+```java
+public void serverStreamingExample(
+RequestType request,
+StreamObserver<ResponseType> responseObserver)
+```
+Notice that the signatures for unary and server-streaming RPCs are the same. A single RequestType is received from the client, and the service implementation sends its response(s) by invoking responseObserver.onNext(ResponseType response).
+
+### Client-streaming
+The service stub signature for a client-streaming RPC method clientStreamingExample:
+```java
+public StreamObserver<RequestType> clientStreamingExample(
+StreamObserver<ResponseType> responseObserver)
+```
+### Bidirectional-streaming
+The service stub signature for a bidirectional-streaming RPC method bidirectionalStreamingExample:
+```java
+public StreamObserver<RequestType> bidirectionalStreamingExample(
+StreamObserver<ResponseType> responseObserver)
+```
+
 Building gRPC-Java
 ==================
 
