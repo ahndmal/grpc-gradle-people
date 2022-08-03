@@ -1,0 +1,9 @@
+schemaVersion: 2.2.0
+metadata:
+  name: 'My custom config'
+attributes:
+  space:
+    # regular, large, xlarge
+#    instanceType: large
+    editor:
+      type: Idea
