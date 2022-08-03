@@ -3,5 +3,7 @@ metadata:
   name: 'My custom config'
 attributes:
   space:
+    # regular, large, xlarge
+#    instanceType: large
     editor:
       type: Idea
