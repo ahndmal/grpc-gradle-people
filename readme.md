@@ -1,5 +1,9 @@
 ## GRPC with Java (Gradle build)
-
+```cli
+# Note: since we are not using TLS all the calls are with -plaintext flag
+grpcurl -plaintext localhost:8080 list # introspect the service
+grpcurl -plaintext localhost:8080 Inventory.GetBookList # to get a list of books
+```
 ### Unary
 The service stub signature for a unary RPC method unaryExample:
 ```java

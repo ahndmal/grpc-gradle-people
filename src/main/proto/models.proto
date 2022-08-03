@@ -16,6 +16,11 @@ message PersonResponse {
   Person person = 1;
 }
 
+message PersonsResponse {
+  repeated Person persons = 1;
+}
+
 service PersonService {
   rpc GetPerson(PersonRequest) returns (PersonResponse) {}
+  rpc GetPersons(PersonRequest) returns (PersonsResponse) {}
 }
