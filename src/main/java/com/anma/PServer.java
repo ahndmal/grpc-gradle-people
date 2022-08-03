@@ -1,12 +1,10 @@
 package com.anma;
 
 import com.anma.grpc.Models;
-import com.anma.grpc.PersonServiceGrpc;
 import io.grpc.*;
-import io.grpc.stub.StreamObserver;
+import io.grpc.protobuf.services.ProtoReflectionService;
 
 import java.io.IOException;
-import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.concurrent.TimeUnit;
 
@@ -22,6 +20,7 @@ public class PServer {
     public PServer(int port) {
         this.server = ServerBuilder.forPort(port)
                 .addService(new PersonService())
+                .addService(ProtoReflectionService.newInstance())
                 .build();
     }
 
@@ -56,10 +55,9 @@ public class PServer {
 
     public static void main(String[] args) throws InterruptedException, UnknownHostException {
         PServer server = new PServer(PORT);
+
         server.start();
         server.blockUntilShutdown();
-
-
 
     }
 }

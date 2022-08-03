@@ -21,6 +21,6 @@ message PersonsResponse {
 }
 
 service PersonService {
-  rpc GetPerson(PersonRequest) returns (PersonResponse) {}
-  rpc GetPersons(PersonRequest) returns (PersonsResponse) {}
+  rpc getPerson(PersonRequest) returns (PersonResponse) {}
+//  rpc GetPersons(PersonRequest) returns (stream Person) {}
 }
