@@ -29,9 +29,9 @@ public class DBc {
 
         ConnectionFactory connectionFactory = ConnectionFactories.get(ConnectionFactoryOptions.builder()
                 .option(DRIVER, "postgresql")
-                .option(HOST, "172.17.0.2")
+                .option(HOST, System.getenv("HOST"))
                 .option(USER, "dev")
-                .option(PASSWORD, "possum")
+                .option(PASSWORD, System.getenv("PASS"))
                 .option(DATABASE, "persons")  // optional
 //                .option(OPTIONS, options) // optional
                 .build());
@@ -41,8 +41,8 @@ public class DBc {
         connectionMono.flatMapMany(conn -> conn.createStatement("select * from persons").execute())
                 .doOnNext(res -> {
                     res.map(it -> {
-                        Object id = (String) it.get(0);
-                        System.out.println(id);
+//                        Object id = (String) it.g(0);
+                        System.out.println(it);
                         return it;
                     });
                 })
