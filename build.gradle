@@ -28,6 +28,7 @@ repositories {
 
 
 dependencies {
+    implementation 'org.postgresql:r2dbc-postgresql:0.9.1.RELEASE'
     runtimeOnly 'io.grpc:grpc-netty-shaded:1.45.1'
     implementation 'io.grpc:grpc-protobuf:1.45.1'
     implementation 'io.grpc:grpc-services:1.45.1'

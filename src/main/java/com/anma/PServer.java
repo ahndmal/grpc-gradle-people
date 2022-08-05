@@ -56,6 +56,8 @@ public class PServer {
     public static void main(String[] args) throws InterruptedException, UnknownHostException {
         PServer server = new PServer(PORT);
 
+        new DBc().connectProg();
+
         server.start();
         server.blockUntilShutdown();
 
