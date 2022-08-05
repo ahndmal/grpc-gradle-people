@@ -4,7 +4,10 @@ import io.r2dbc.spi.Connection;
 import io.r2dbc.spi.ConnectionFactories;
 import io.r2dbc.spi.ConnectionFactory;
 import io.r2dbc.spi.ConnectionFactoryOptions;
+import io.r2dbc.spi.Readable;
 import org.reactivestreams.Publisher;
+import org.reactivestreams.Subscriber;
+import org.reactivestreams.Subscription;
 import reactor.core.publisher.Mono;
 
 import java.util.HashMap;
@@ -38,14 +41,9 @@ public class DBc {
 
 //        Publisher<? extends Connection> connectionPublisher = connectionFactory.create();
         Mono<Connection> connectionMono = Mono.from(connectionFactory.create());
-        connectionMono.flatMapMany(conn -> conn.createStatement("select * from persons").execute())
-                .doOnNext(res -> {
-                    res.map(it -> {
-//                        Object id = (String) it.g(0);
-                        System.out.println(it);
-                        return it;
-                    });
-                })
+        connectionMono.doOnNext(con -> con.createStatement("select * from persons").execute()).subscribe();
+        connectionMono.flatMapMany(conn -> conn.createStatement("select * from persons").execute()) // PostgresqlResult
+                .doOnNext(System.out::println)
                 .subscribe();
 
     }
